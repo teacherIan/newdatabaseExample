@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,6 +15,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
+
+    @FXML
+    private Label errorMessage;
 
     @FXML
     private TableColumn<Person, Integer> ageColumn;
@@ -53,8 +57,26 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    void add(ActionEvent event) {
+    void add() {
+
+        String firstName = firstNameTextBox.getText();
+        String lastName = lastNameTextBox.getText();
+
+        try {
+            int age = Integer.parseInt(ageTextBox.getText());
+            addToDatabase(firstName,lastName,age);
+        } catch (NumberFormatException e) {
+            errorMessage.setOpacity(1);
+        }
 
     }
 
+    public void addToDatabase(String firstName, String lastName, int age) {
+        People.add(new Person(firstName,lastName,age));
+        tableView.setItems(People);
+        errorMessage.setOpacity(0);
+        firstNameTextBox.setText("");
+        lastNameTextBox.setText("");
+        ageTextBox.setText("");
+    }
 }
