@@ -41,8 +41,7 @@ public class HelloController implements Initializable {
     private TableView<Person> tableView;
 
     ObservableList<Person> People = FXCollections.observableArrayList(
-            new Person("Ian", "Malloy", 50),
-            new Person("Doug", "Malloy", 27)
+
     );
 
 
